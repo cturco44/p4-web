@@ -1,0 +1,30 @@
+Matt
+    List:
+    destructor
+    default constructor
+    empty()
+    back()
+    push_back()
+    pop_back()
+
+    Iterator:
+    overloaded=
+    copy constructor
+    erase()
+    end()
+
+Connor
+    List:
+    overloaded =
+    copy constructor
+    size()
+    front()
+    push_front()
+    pop_front()
+    clear()
+
+    Iterator:
+    destructor
+    default constructor
+    insert()
+    operator--
