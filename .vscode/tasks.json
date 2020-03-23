@@ -1,0 +1,19 @@
+{
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "g++.exe build active file",
+            "command": "C:\\mini-gw\\mingw32\\bin\\g++.exe",
+            "args": ["-Wall", "-Werror", "-pedantic", "--std=c++11", 
+                "-g",
+                "${file}", "${fileDirname}\\List.h",
+                "-o",
+                "${fileDirname}\\${fileBasenameNoExtension}.exe"
+            ],
+            "options": {
+                "cwd": "C:\\mini-gw\\mingw32\\bin"
+            }
+        }
+    ],
+    "version": "2.0.0"
+}

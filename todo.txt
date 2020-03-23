@@ -7,11 +7,16 @@ Matt
     push_back()
     pop_back()
     erase()
-    operator !=
+    
 
     Iterator:
     end()
     Iterator(Node *p) constructor
+    operator !=
+
+    Go through and make sure any function
+        that doesn't modify is const
+    Write Test cases for all
 
 Connor
     List:
@@ -22,9 +27,8 @@ Connor
     push_front()
     pop_front()
     insert()
-    operator ==
 
     Iterator:
     destructor
     default constructor
-    
+    operator ==

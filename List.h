@@ -37,9 +37,9 @@ public:
 
   //EFFECTS:  returns true if the list is empty
   bool empty() const{
-    if(first == nullptr && last == nullptr)
-      return true;
-    return false;   
+    if(first && last)
+      return false;
+    return true;   
   }
 
   //EFFECTS: returns the number of elements in this List
@@ -65,9 +65,13 @@ public:
     added->datum = datum;
     added->next = nullptr;
     added->prev = last;
+    
+    if(empty())
+      first = added;
 
-    //Set next node of current end to be new end
-    last->next = added;
+    //Set next node of current end to be new end only if pointer isn't null
+    if(last)
+      last->next = added;
 
     //Set end to be the new node
     last = added;
@@ -82,17 +86,24 @@ public:
   //MODIFIES: may invalidate list iterators
   //EFFECTS:  removes the item at the back of the list
   void pop_back(){
-    Node *newEnd =  last->prev;
-    newEnd->next = nullptr;
-    delete last;
-    last = newEnd;
+    if(last->prev){
+      Node *newEnd =  last->prev;
+      newEnd->next = nullptr;
+      delete last;
+      last = newEnd;
+    }
+    else{
+      delete last;
+      last = nullptr;
+    }
+    
   };
 
   //MODIFIES: may invalidate list iterators
   //EFFECTS:  removes all items from the list
   void clear(){
     Node *ptr = last;
-    while(ptr->prev != nullptr) {
+    while(ptr) {
       pop_back();
       ptr = last;
     }
@@ -163,7 +174,11 @@ public:
     }
 
     //Operator ==
-    bool operator ==(const Iterator& i) const;
+    bool operator ==(const Iterator& i) const{
+      if(node_ptr == i.node_ptr)
+        return true;
+      return false;
+    }
 
     //Operator !=
     bool operator != (const Iterator& i) const{
@@ -201,8 +216,36 @@ public:
   //EFFECTS: Removes a single element from the list container
   void erase(Iterator i){
     Node *victim = i.node_ptr;
-    (victim->prev)->next = (victim->next);
-    (victim->next)->prev = (victim->prev);
+    
+    //Check to see if it's the first or last element
+    bool front = false;
+    bool end = false;
+    if(!victim->prev)
+      front = true;
+    if(!victim->next)
+      end = true;
+
+    //If it isn't first and last
+    if(!front && !end){
+      (victim->prev)->next = (victim->next);
+      (victim->next)->prev = (victim->prev);
+    }
+    //If it is first but not last
+    else if(front && !end) {
+      (victim->next)->prev = nullptr;
+      first = victim->next;
+    }
+    //If it is last but not first
+    else if(!front && end) {
+      (victim->prev)->next = nullptr;
+      last = victim->next;
+    }
+    //If it is the last element
+    else {
+      first = nullptr;
+      last = nullptr;
+    }
+  
     delete victim;
   }
 
