@@ -6,25 +6,25 @@ Matt
     back()
     push_back()
     pop_back()
+    erase()
+    operator !=
 
     Iterator:
-    overloaded=
-    copy constructor
-    erase()
     end()
+    Iterator(Node *p) constructor
 
 Connor
     List:
-    overloaded =
+    overloaded = (use copy constructor)
     copy constructor
     size()
     front()
     push_front()
     pop_front()
-    clear()
+    insert()
+    operator ==
 
     Iterator:
     destructor
     default constructor
-    insert()
-    operator--
+    
