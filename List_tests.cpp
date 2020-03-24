@@ -61,4 +61,14 @@ TEST(not_equal_false) {
     ASSERT_FALSE(test.begin() != test.end());
 }
 
+TEST(copy_constructor) {
+    List<int> test;
+    test.push_back(5);
+    test.push_back(4);
+    test.push_back(3);
+
+    List<int> copied_into = test;
+
+}
+
 TEST_MAIN()

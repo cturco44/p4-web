@@ -33,7 +33,20 @@ public:
   //all data in old list onto new list, which creates new nodes
   //Not sure that the <T> is necessary tbh, but I think it prevents
   //copying of two lists that aren't the same type
-  List<T> (const List<T>& l);
+    List<T> (const List<T>& l) {
+        push_all(l);
+        
+    }
+    List & operator=(const List &rhs) {
+        if(this == &rhs) {
+            return *this;
+        }
+        clear();
+        push_all(rhs);
+        
+        return *this;
+    }
+    
 
   //EFFECTS:  returns true if the list is empty
   bool empty() const{
@@ -96,8 +109,7 @@ public:
       delete last;
       last = nullptr;
     }
-    
-  };
+  }
 
   //MODIFIES: may invalidate list iterators
   //EFFECTS:  removes all items from the list
@@ -116,6 +128,13 @@ public:
 
 private:
   //a private type
+    
+    //added function to help in copy and assignment
+    void push_all(const List<T> &other) {
+        for(Node *np = other.first; np; np = np->next) {
+            push_back(np->datum);
+        }
+    }
   struct Node {
     Node *next;
     Node *prev;
@@ -261,6 +280,5 @@ public:
 // (your choice). Do not change the public interface of List, although you
 // may add the Big Three if needed.  Do add the public member functions for
 // Iterator.
-
 
 #endif // Do not remove this. Write all your code above this line.
