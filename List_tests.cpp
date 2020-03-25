@@ -58,7 +58,10 @@ TEST(not_equal_true) {
 TEST(not_equal_false) {
     List<string> test;
     test.push_back("Fish");
-    ASSERT_FALSE(test.begin() != test.end());
+    test.push_back("Dog");
+    List<string>::Iterator it1 = test.begin();
+    List<string>::Iterator it2 = ++test.begin();
+    ASSERT_TRUE(*it1 != *it2);
 }
 
 TEST(copy_constructor) {
