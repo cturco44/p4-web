@@ -34,6 +34,8 @@ public:
   //Not sure that the <T> is necessary tbh, but I think it prevents
   //copying of two lists that aren't the same type
     List<T> (const List<T>& l) {
+        first = nullptr;
+        last = nullptr;
         push_all(l);
         
     }
@@ -42,6 +44,8 @@ public:
             return *this;
         }
         clear();
+        first = nullptr;
+        last = nullptr;
         push_all(rhs);
         
         return *this;
@@ -50,17 +54,25 @@ public:
 
   //EFFECTS:  returns true if the list is empty
   bool empty() const{
-    if(first && last)
+    if(size() != 0)
       return false;
     return true;   
   }
 
   //EFFECTS: returns the number of elements in this List
-  int size() const;
+    int size() const {
+        int count = 0;
+        for(Iterator it = this->begin(); it != this->end(); ++it) {
+            ++count;
+        }
+        return count;
+    }
 
   //REQUIRES: list is not empty
   //EFFECTS: Returns the first element in the list by reference
-  T & front();
+    T & front() {
+        return first->datum;
+    }
 
   //REQUIRES: list is not empty
   //EFFECTS: Returns the last element in the list by reference
@@ -69,7 +81,26 @@ public:
   }
 
   //EFFECTS:  inserts datum into the front of the list
-  void push_front(const T &datum);
+    void push_front(const T &datum) {
+        if(empty()) {
+            Node *added = new Node;
+            added->datum = datum;
+            added->next = nullptr;
+            added->prev = nullptr;
+            first = added;
+            last = added;
+            return;
+        }
+        //Creates node with data in it
+        Node *added = new Node;
+        added->datum = datum;
+        
+        added->prev = nullptr;
+        added->next = first;
+        first->prev = added;
+        first = added;
+        
+    }
 
   //EFFECTS:  inserts datum into the back of the list
   void push_back(const T &datum){
@@ -93,7 +124,20 @@ public:
   //REQUIRES: list is not empty
   //MODIFIES: may invalidate list iterators
   //EFFECTS:  removes the item at the front of the list
-  void pop_front();
+    void pop_front() {
+        if(size() == 1) {
+            delete first;
+            first = nullptr;
+            last = nullptr;
+            return;
+        }
+        Iterator it = begin();
+        Iterator second = ++it;
+        Node *secondNode = second.node_ptr;
+        delete first;
+        first = secondNode;
+        secondNode->prev = nullptr;
+    }
 
   //REQUIRES: list is not empty
   //MODIFIES: may invalidate list iterators
@@ -108,6 +152,7 @@ public:
     else{
       delete last;
       last = nullptr;
+        first = nullptr;
     }
   }
 
@@ -164,7 +209,10 @@ public:
   public:
     // This operator will be used to test your code. Do not modify it.
     // Requires that the current element is dereferenceable.
-    Iterator& operator --() {
+      Iterator() {
+          node_ptr = nullptr;
+      }
+      Iterator& operator --() {
       assert(node_ptr);
       node_ptr = node_ptr->prev;
       return *this;
@@ -227,18 +275,26 @@ public:
 
   // return an Iterator pointing to "past the end"
   Iterator end() const {
-    return Iterator(last);
+    return Iterator(nullptr);
   };
 
   //REQUIRES: i is a valid, dereferenceable iterator associated with this list
   //MODIFIES: may invalidate other list iterators
   //EFFECTS: Removes a single element from the list container
   void erase(Iterator i){
+      assert(*i);
     Node *victim = i.node_ptr;
     
     //Check to see if it's the first or last element
     bool front = false;
     bool end = false;
+    
+//      if(this->end() == i) {
+//          end = true;
+//      }
+//      if(this->begin() == i) {
+//          front = true;
+//      }
     if(!victim->prev)
       front = true;
     if(!victim->next)
@@ -270,7 +326,37 @@ public:
 
   //REQUIRES: i is a valid iterator associated with this list
   //EFFECTS: inserts datum before the element at the specified position.
-  void insert(Iterator i, const T &datum);
+    void insert(Iterator i, const T &datum) {
+        //Empty list
+        if(size() == 0) {
+            push_back(datum);
+            return;
+        }
+        //Iterator at end
+        if(i == end()) {
+            push_back(datum);
+            return;
+        }
+        //Iterator is first element
+        if(i == begin()) {
+            push_front(datum);
+            return;
+        }
+        //Creates new Node in List and initializes its values
+        Node *second = i.node_ptr;
+        Node *first = ((--i).node_ptr);
+        
+        
+        Node *newNode = new Node;
+        newNode->datum = datum;
+        newNode->next = second;
+        newNode->prev = first;
+        
+        //Changes next and previous Nodes pointers
+        first->next = newNode;
+        second->prev = newNode;
+        
+    }
 
 };//List
 
