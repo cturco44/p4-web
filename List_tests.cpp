@@ -2,12 +2,37 @@
 
 #include "List.h"
 #include "unit_test_framework.h"
+#include <vector>
 
 using namespace std;
 
+TEST(templating) {
+    List< List<int> > test;
+    List<int> inside;
+    inside.push_back(6);
+    test.push_back(inside);
+    List<int> outside = *(test.begin());
+    ASSERT_EQUAL(*(outside.begin()), *(inside.begin()));
+}
+
+TEST(templating2) {
+    struct fish {
+        string corn;
+    };
+    List< List<fish> > school;
+    fish amigo = {"string"};
+    List<fish> middle;
+    middle.push_back(amigo);
+    school.push_back(middle);
+    auto what = *school.begin();
+    ASSERT_EQUAL((*what.begin()).corn,(*middle.begin()).corn);
+}
+
 TEST(default_constructor) {
     List<int> test;
+    ASSERT_EQUAL(test.size(), 0);
 }
+
 TEST(push_back) {
     List<int> test;
     test.push_back(5);
@@ -16,15 +41,28 @@ TEST(push_back) {
     ASSERT_EQUAL(*++test.begin(), 6);
 }
 
+TEST(push_back2) {
+    List< const int* > test;
+    const int corn[3] = {1,2,3};
+    test.push_back(corn);
+    ASSERT_EQUAL(*test.begin(), corn);
+}
+
 TEST(empty) {
     List<int> test;
-    ASSERT_TRUE(test.empty());
-    
+    ASSERT_TRUE(test.empty());  
     List<int> test2;
     test2.push_back(5);
     test2.push_back(3);
-    ASSERT_TRUE(!test2.empty());
-    
+    ASSERT_TRUE(!test2.empty());   
+}
+
+TEST(empty2) {
+    List< vector<float> > fly;
+    vector<float> fish = {1.0};
+    fly.push_back(fish);
+    fly.erase(fly.begin());
+    ASSERT_TRUE(fly.empty());
 }
 
 TEST(back) {
@@ -36,6 +74,21 @@ TEST(back) {
     ASSERT_EQUAL(test.back(), 2);
     test.push_front(7);
     ASSERT_EQUAL(test.back(), 2);
+}
+
+TEST(back2) {
+    List<int> test;
+    for(int i = 0; i < 10; ++i) {
+        test.push_front(i);
+    }
+
+    auto endIt = test.begin();
+    ++++++++++++++++++endIt;
+    for(int i = 0; i < 10; ++i ) {
+        ASSERT_EQUAL(test.back(),i);
+        test.erase(endIt);
+        endIt = --endIt;
+    }
 }
 
 TEST(pop_back) {
@@ -62,12 +115,14 @@ TEST(erase) {
     ASSERT_TRUE(test.empty());
 }
 
+
+
 TEST(not_equal_true) {
     List<string> test1;
     test1.push_back("HI");
     test1.push_back("World");
-    ASSERT_TRUE(test1.begin() != test1.end());
-    
+    test1.push_back("world");
+    ASSERT_TRUE(test1.begin() != ++++test1.begin());  
 }
 
 TEST(not_equal_false) {
@@ -78,6 +133,33 @@ TEST(not_equal_false) {
     List<string>::Iterator it2 = ++test.begin();
     ASSERT_TRUE(*it1 != *it2);
     ASSERT_TRUE(!(*it1 != *it1));
+}
+
+TEST(opt_plus_plus) {
+    List<double> test;
+    for(int i = 0; i < 20; i++)
+    {
+        test.push_back(3.1415921684216 + i);
+    }
+    int k = 0;
+    for(auto j = test.begin(); j != test.end(); ++++j)
+    {
+
+        ASSERT_EQUAL(*j,k+3.1415921684216)
+        k+=2;
+    }     
+}
+
+TEST(equal_equal) {
+    List < List<bool>::Iterator > test;
+    List<bool> corn;
+    List<bool> green;
+    corn.push_back(true);
+    green.push_back(false);
+    test.push_back(corn.begin());
+    test.push_back(green.begin());
+    ASSERT_FALSE(*(test.begin()) == *(++test.begin()))
+    ASSERT_TRUE(*(test.begin()) == *(test.begin()));
 }
 
 TEST(copy_constructor) {

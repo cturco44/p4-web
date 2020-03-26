@@ -39,7 +39,7 @@ public:
         push_all(l);
         
     }
-    List & operator=(const List &rhs) {
+    List<T> & operator=(const List<T> &rhs) {
         if(this == &rhs) {
             return *this;
         }
@@ -81,7 +81,7 @@ public:
   }
 
   //EFFECTS:  inserts datum into the front of the list
-    void push_front(const T &datum) {
+    void push_front(const T &datum){
         if(empty()) {
             Node *added = new Node;
             added->datum = datum;
@@ -264,6 +264,7 @@ public:
   // return an Iterator pointing to the first element
   Iterator begin() const {
     return Iterator(first);
+    
   }
 
   // return an Iterator pointing to "past the end"
@@ -275,7 +276,6 @@ public:
   //MODIFIES: may invalidate other list iterators
   //EFFECTS: Removes a single element from the list container
   void erase(Iterator i){
-      assert(*i);
     Node *victim = i.node_ptr;
     
     //Check to see if it's the first or last element
@@ -288,6 +288,7 @@ public:
 //      if(this->begin() == i) {
 //          front = true;
 //      }
+
     if(!victim->prev)
       front = true;
     if(!victim->next)
@@ -306,7 +307,7 @@ public:
     //If it is last but not first
     else if(!front && end) {
       (victim->prev)->next = nullptr;
-      last = victim->next;
+      last = victim->prev;
     }
     //If it is the last element
     else {

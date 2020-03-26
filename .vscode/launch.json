@@ -5,17 +5,25 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "(lldb) Launch",
+            "name": "g++.exe build and debug active file",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/List_tests.exe",
+            "program": "${fileDirname}\\${fileBasenameNoExtension}.exe",
             "args": [],
-            "stopAtEntry": true,
+            "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
             "externalConsole": false,
-            "MIMode": "lldb",
-           
+            "MIMode": "gdb",
+            "miDebuggerPath": "C:\\mini-gw\\mingw32\\bin\\gdb.exe",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "g++.exe build active file"
         }
     ]
 }
