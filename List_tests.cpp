@@ -5,6 +5,9 @@
 
 using namespace std;
 
+TEST(default_constructor) {
+    List<int> test;
+}
 TEST(push_back) {
     List<int> test;
     test.push_back(5);
@@ -16,12 +19,23 @@ TEST(push_back) {
 TEST(empty) {
     List<int> test;
     ASSERT_TRUE(test.empty());
+    
+    List<int> test2;
+    test2.push_back(5);
+    test2.push_back(3);
+    ASSERT_TRUE(!test2.empty());
+    
 }
 
 TEST(back) {
     List<int> test;
     test.push_back(5);
     ASSERT_EQUAL(test.back(), 5);
+    test.push_back(3);
+    test.push_back(2);
+    ASSERT_EQUAL(test.back(), 2);
+    test.push_front(7);
+    ASSERT_EQUAL(test.back(), 2);
 }
 
 TEST(pop_back) {
@@ -53,6 +67,7 @@ TEST(not_equal_true) {
     test1.push_back("HI");
     test1.push_back("World");
     ASSERT_TRUE(test1.begin() != test1.end());
+    
 }
 
 TEST(not_equal_false) {
@@ -62,6 +77,7 @@ TEST(not_equal_false) {
     List<string>::Iterator it1 = test.begin();
     List<string>::Iterator it2 = ++test.begin();
     ASSERT_TRUE(*it1 != *it2);
+    ASSERT_TRUE(!(*it1 != *it1));
 }
 
 TEST(copy_constructor) {
@@ -69,6 +85,25 @@ TEST(copy_constructor) {
     test.push_back(5);
     test.push_back(4);
     test.push_back(3);
+
+    List<int> copied_into = test;
+    
+    
+    List<int>::Iterator start_test = test.begin();
+    List<int>::Iterator copied_into_start = copied_into.begin();
+    int holder1 = 0;
+    int holder2 = 0;
+    ASSERT_EQUAL(test.size(), copied_into.size());
+    for(; start_test != test.end(); ++start_test) {
+        holder1 = *start_test;
+        holder2 = *copied_into_start;
+        ASSERT_EQUAL(holder1, holder2);
+        ++copied_into_start;
+    }
+    
+}
+TEST(copy_constructor2) {
+    List<int> test;
 
     List<int> copied_into = test;
     
@@ -95,7 +130,26 @@ TEST(assignment_operator) {
     List<int>copied_into;
     copied_into = test;
     
+    List<int>::Iterator test_begin = test.begin();
+    List<int>::Iterator copied_begin = copied_into.begin();
+    
+    ASSERT_EQUAL(copied_into.size(), test.size());
+    
+    for(; test_begin != test.end(); ++test_begin) {
+        int holder1 = *copied_begin;
+        int holder2 = *test_begin;
+        ASSERT_EQUAL(holder1, holder2);
+        ++copied_begin;
+    }
+    
     test = test;
+    List<int>::Iterator it = test.begin();
+    ASSERT_EQUAL(*it, 5);
+    ASSERT_EQUAL(*++it, 4);
+    ASSERT_EQUAL(*++it, 3);
+    
+    
+    
 }
 TEST(count) {
     List<string> test;
@@ -110,6 +164,8 @@ TEST(count) {
     //Edge case: Tests array of size 0
     List<int>num;
     ASSERT_EQUAL(num.size(), 0);
+    num.push_front(7);
+    ASSERT_EQUAL(num.size(), 1);
 }
 TEST(push_front) {
     List<int> test;
