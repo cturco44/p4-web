@@ -78,21 +78,14 @@ TEST(back) {
 
 TEST(back2) {
     List<int> test;
-    cout<<endl;
-    for(int i = 0; i < 10; ++i) {
-        test.push_front(i);
-        cout<<i;
-    }
-    cout<<endl;
-    auto endIt = test.begin();
-    ++++++++++++++++++endIt;
-    for(int i = 0; i < 10; ++i ) {
-        ASSERT_EQUAL(test.back(),i);
-        test.erase(endIt);
-        cout<<i;
-        if(i < 9)
-            --endIt;
-    }
+    test.push_front(1);
+    test.push_front(2);
+    test.push_back(3);
+    test.erase(++++test.begin());
+    test.erase(++test.begin());
+    test.erase(test.begin());
+    ASSERT_EQUAL(test.size(),0);
+    ASSERT_TRUE(test.empty());
 }
 
 TEST(pop_back) {
