@@ -89,16 +89,16 @@ TEST(copy_constructor) {
     List<int> copied_into = test;
     
     
-    List<int>::Iterator start_test = test.begin();
-    List<int>::Iterator copied_into_start = copied_into.begin();
-    int holder1 = 0;
-    int holder2 = 0;
+    List<int>::Iterator starting = test.begin();
+    List<int>::Iterator cop = copied_into.begin();
+    int thing1 = 0;
+    int thing2 = 0;
     ASSERT_EQUAL(test.size(), copied_into.size());
-    for(; start_test != test.end(); ++start_test) {
-        holder1 = *start_test;
-        holder2 = *copied_into_start;
-        ASSERT_EQUAL(holder1, holder2);
-        ++copied_into_start;
+    for(; starting != test.end(); ++starting) {
+        thing1 = *starting;
+        thing2 = *cop;
+        ASSERT_EQUAL(thing1, thing2);
+        ++cop;
     }
     
 }
