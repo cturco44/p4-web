@@ -78,16 +78,20 @@ TEST(back) {
 
 TEST(back2) {
     List<int> test;
+    cout<<endl;
     for(int i = 0; i < 10; ++i) {
         test.push_front(i);
+        cout<<i;
     }
-
+    cout<<endl;
     auto endIt = test.begin();
     ++++++++++++++++++endIt;
     for(int i = 0; i < 10; ++i ) {
         ASSERT_EQUAL(test.back(),i);
         test.erase(endIt);
-        endIt = --endIt;
+        cout<<i;
+        if(i < 9)
+            --endIt;
     }
 }
 

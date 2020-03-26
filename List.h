@@ -81,7 +81,7 @@ public:
   }
 
   //EFFECTS:  inserts datum into the front of the list
-    void push_front(const T &datum){
+  void push_front(const T &datum){
         if(empty()) {
             Node *added = new Node;
             added->datum = datum;
@@ -152,7 +152,7 @@ public:
     else{
       delete last;
       last = nullptr;
-        first = nullptr;
+      first = nullptr;
     }
   }
 
