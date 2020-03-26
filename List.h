@@ -232,13 +232,6 @@ public:
       return node_ptr->datum;
     }
 
-    //Operator +
-    Iterator& operator +(int i) {
-      for(int j = 0; j < i; j++){
-        ++this;
-      }
-      return this;
-    }
 
     //Operator ==
     bool operator ==(const Iterator& i) const{

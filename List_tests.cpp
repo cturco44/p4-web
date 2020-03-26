@@ -314,4 +314,11 @@ TEST(insert3) {
         ++correctstart;
     }
 }
+TEST(compile) {
+    List<int> t1;
+    List<char> t2;
+    List<string> t3;
+    List<bool> t4;
+    List<double> t5;
+}
 TEST_MAIN()
