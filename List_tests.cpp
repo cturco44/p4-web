@@ -101,6 +101,18 @@ TEST(pop_back) {
     ASSERT_TRUE(test.empty());
 }
 
+TEST(pop_back2) {
+    List<int> test;
+    for(int i = 0; i < 10; ++i) {
+        test.push_back(i);
+    }
+    for(int i = 0; i < 10; ++i) {
+        test.pop_back();
+    }
+    ASSERT_TRUE(test.empty());
+    ASSERT_EQUAL(test.size(),0);
+}
+
 TEST(erase) {
     List<int> test;
     test.push_back(5);
@@ -115,7 +127,38 @@ TEST(erase) {
     ASSERT_TRUE(test.empty());
 }
 
+TEST(erase2) {
+    List<int> test;
+    for(int i = 0; i < 10; ++i) {
+        test.push_back(i);
+    }
+    for(int i = 0; i < 10; ++i) {
+        test.erase(test.begin());
+    }
+    ASSERT_TRUE(test.empty());
+    ASSERT_EQUAL(test.size(),0);
+}
 
+TEST(erase3) {
+    List<int> test;
+    List<int> solution;
+    solution.push_back(1);
+    solution.push_front(2);
+    solution.push_front(3);
+    test.push_back(3);
+    test.push_back(5);
+    test.push_back(2);
+    test.push_back(4);
+    test.push_back(1);
+    test.erase(++test.begin());
+    test.erase(++++test.begin());
+    auto i = test.begin();
+    ASSERT_EQUAL(test.size(), solution.size());
+    for(auto j = solution.begin(); j != solution.end(); ++j) {
+        ASSERT_EQUAL(*j,*i);
+        ++i;
+    }
+}
 
 TEST(not_equal_true) {
     List<string> test1;

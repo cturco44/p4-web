@@ -17,6 +17,8 @@ Matt
     Go through and make sure any function
         that doesn't modify is const
     Write Test cases for all
+    !!!!!!!!!!!!!!!!!!!!!!!!!!!
+    Write Test cases for pop_back and erase
 
 Connor
     List:
