@@ -188,7 +188,9 @@ private:
 
   //REQUIRES: list is empty
   //EFFECTS:  copies all nodes from other to this
-  void copy_all(const List<T> &other);
+    void copy_all(const List<T> &other) {
+        push_all(other);
+    }
 
   Node *first;   // points to first Node in list, or nullptr if list is empty
   Node *last;    // points to last Node in list, or nullptr if list is empty
